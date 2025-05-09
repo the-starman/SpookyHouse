@@ -169,7 +169,7 @@ class ChatLog():
         _temp = 'temp'
 
     def create_session_ledger(self):
-        self.set_header_footer('ChatLogs/fgstyles.css')
+        self.set_header_footer('fgstyles.css')
         self._html_body = []
         self.add_header()
         for session in self._sessions:
