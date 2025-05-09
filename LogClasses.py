@@ -135,9 +135,9 @@ class ChatLog():
         self._sessions_df = self._sessions_df.fillna('')
         self._sessions_df['Players'] = self._sessions_df.apply(lambda x: x['Text'].split(':')[0] if '=' in x['Roll'] else '', axis=1)
 
-    def set_header_footer(self):
+    def set_header_footer(self, css_file):
         if not self.html_header:
-            self.html_header = ['<!DOCTYPE html>', '<html>', '<head>', '<link rel="stylesheet" href="fgstyles.css">', '</head>', '<body>']
+            self.html_header = ['<!DOCTYPE html>', '<html>', '<head>', f'<link rel="stylesheet" href="{css_file}">', '</head>', '<body>']
             self.html_footer = ['</body>', '</html>']
 
     def add_header(self):
@@ -154,21 +154,22 @@ class ChatLog():
                 file.write(lines + '\n')
 
     def create_lobby(self):
-        self.set_header_footer()
+        self.set_header_footer('ChatLogs/fgstyles.css')
         self._html_body = []
         self.add_header()
         self._html_body.append('<h4>You Have Entered The Spooky House Lobby</h4>')
         self._html_body.append('<h6>Choose a room to enter or view the session ledger</h6>')
         self._html_body.append('<ul>')
-        self._html_body.append('<li><a href="session_ledger.html">Session Ledger</a></li>')
+        self._html_body.append('<li><a href="ChatLogs/session_ledger.html">Session Ledger</a></li>')
         for player in self.player_names:
-            self._html_body.append(f'<li><a href="{player}.html">{player.split(' ')[0]}\'s Room</a></li>')
+            self._html_body.append(f'<li><a href="ChatLogs/{player}.html">{player.split(' ')[0]}\'s Room</a></li>')
         self._html_body.append('</ul>')
         self.add_footer()
         self.write_html_file('Lobby.html', self._html_body)
         _temp = 'temp'
 
     def create_session_ledger(self):
+        self.set_header_footer('ChatLogs/fgstyles.css')
         self._html_body = []
         self.add_header()
         for session in self._sessions:
@@ -179,7 +180,7 @@ class ChatLog():
             for text in sess_list:
                 self._html_body.append(text)
         self.add_footer()
-        self.write_html_file('session_ledger.html', self._html_body)
+        self.write_html_file('ChatLogs/session_ledger.html', self._html_body)
         _temp = 'temp'
 
     
