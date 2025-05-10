@@ -207,7 +207,7 @@ class ChatLog():
             self._html_body.append('<h6>Choose an adventure to read</h6>')
             self._html_body.append('<ul>')
             for session in self._sessions:
-                self._html_body.append(f'<li><a href="Rooms/ChatLogs/{player.replace(' ', '')}_{session}.html">{player}\'s Adventures On: {session}</a></li>')
+                self._html_body.append(f'<li><a href="ChatLogs/{player.replace(' ', '')}_{session}.html">{player}\'s Adventures On: {session}</a></li>')
             self.add_footer()
             self.write_html_file(f'Rooms/{player.replace(' ', '')}.html', self._html_body)
         _temp = 'temp'
