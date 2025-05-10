@@ -1,5 +1,5 @@
 body {
-    background-color: #778899;
+    background-color: #ECEFCA;
 }
 img {
     width: 50px;
@@ -7,19 +7,19 @@ img {
     vertical-align: middle;
 }
 p {
+    font-family: Consolas, "Courier New", monospace;
     font-size: 18px;
 }
 strong {
     font-size: 24px;
 }
 .player{
-    color: #FFFFFF;
+    color: #213448;
 }
 .info{
-    color: #DA8ADB;
+    color: #94B4C1;
 }
 .gmtext{
-    background-color: #F3E5AB;
     color: #000000;
 }
 .emote{

@@ -95,6 +95,7 @@ class ChatLog():
     
     def check_font_type(self, df):
         text_type = df['Text Type']
+        text = df['Text']
         if text_type == 'Emote':
             return 'emote'
         if text_type == 'NPC':
@@ -102,6 +103,8 @@ class ChatLog():
         if text_type == 'OoC':
             return 'ooc'
         if text_type == 'GM Text':
+            if text.split(':')[0] == 'GM':
+                return 'player'
             return 'gmtext'
         if 'Player' in text_type:
             return 'player'
@@ -117,6 +120,7 @@ class ChatLog():
         new_text = df['New Text']
         if 'Player:' in text_type:
             player = text_type.replace('Player:', '')
+            new_text = new_text.replace(f'{player}', '')
             new_text = new_text.replace('">', f'"><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><strong>{player}</strong>')
             return new_text
         return new_text
