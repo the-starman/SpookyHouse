@@ -23,7 +23,7 @@ strong {
 .gmtext{
     color: #000000;
     background-color: #FFFFFF;
-    border: 2px solid #213448;
+    border: 2px solid red;
     border-radius: 10px;
     font-size: 22px;
     padding-left: 10px;
