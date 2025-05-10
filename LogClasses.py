@@ -136,9 +136,8 @@ class ChatLog():
         self._sessions_df['Players'] = self._sessions_df.apply(lambda x: x['Text'].split(':')[0] if '=' in x['Roll'] else '', axis=1)
 
     def set_header_footer(self, css_file):
-        if not self.html_header:
-            self.html_header = ['<!DOCTYPE html>', '<html>', '<head>', f'<link rel="stylesheet" href="{css_file}">', '</head>', '<body>']
-            self.html_footer = ['</body>', '</html>']
+        self.html_header = ['<!DOCTYPE html>', '<html>', '<head>', f'<link rel="stylesheet" href="{css_file}">', '</head>', '<body>']
+        self.html_footer = ['</body>', '</html>']
 
     def add_header(self):
         for line in self.html_header:
