@@ -13,7 +13,12 @@ chat_obj.remove_lines = ['Session started at',
                          "Fen's NPC Portrait Workaround",
                          'Story Template Custom Record Templates',
                          'FG Browser',
-                         'Folder assets refreshed']
+                         'Folder assets refreshed',
+                         'Chatlog Explorer v',
+                         'Token Height Indication v',
+                         'SmiteWorks Core Dark',
+                         'Clear Dead v',
+                         'Host (v']
 chat_obj.player_names = ['Carmen Santamonica', 'Carl Handy', 'Professor Plato', 'Lillian Lovell']
 chat_obj.player_cleanup = [['Moguppo The Handyman', 'Carl Handy'], ['Mogstew', 'Carl Handy'], ['The Professor', 'Professor Plato']]
 # chat_obj.fonts = [['880000', 'Emote'],

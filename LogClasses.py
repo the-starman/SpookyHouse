@@ -164,8 +164,8 @@ class ChatLog():
         self.add_header()
         self._html_body.append('<h1>You Have Entered The Spooky House Lobby</h1>')
         self._html_body.append('<h3>Choose a room to enter or view the session ledger</h3>')
-        self._html_body.append('<br><a href="SessionLedger.html">Session Ledger</a><br>')
         self._html_body.append('<ul>')
+        self._html_body.append('<li><a href="SessionLedger.html">Session Ledger</a></li>')
         for player in self.player_names:
             self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
         self._html_body.append('</ul>')
