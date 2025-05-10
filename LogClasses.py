@@ -79,7 +79,7 @@ class ChatLog():
             return'OoC'
         if font in self.player_fonts:
             if player in self.player_names:
-                return 'Player:' + player.replace(' ', '')
+                return 'Player:' + player
             return'GM Text'
         if font in self.gmtext_fonts:
             return'GM Text'
@@ -88,7 +88,7 @@ class ChatLog():
                 return 'Whisper->' + player.split('; ')[-1].replace(' ', '')
             if player in self.player_names:
                 if ' [' in text:
-                    return 'Roll:' + player.replace(' ', '')
+                    return 'Roll:' + player
                 return 'Whisper<-' + player.replace(' ', '')
             return'info'
         return 'not listed'
@@ -117,7 +117,7 @@ class ChatLog():
         new_text = df['New Text']
         if 'Player:' in text_type:
             player = text_type.replace('Player:', '')
-            new_text = new_text.replace('">', f'"><img src="../Assets/Images/{player}.png" alt="{player}"><strong>{player}</strong>')
+            new_text = new_text.replace('">', f'"><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><strong>{player}</strong>')
             return new_text
         return new_text
 
@@ -159,7 +159,7 @@ class ChatLog():
         self._html_body.append('<ul>')
         self._html_body.append('<li><a href="SessionLedger.html">Session Ledger</a></li>')
         for player in self.player_names:
-            self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
+            self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
         self._html_body.append('</ul>')
         self.add_footer()
         self.write_html_file('Lobby.html', self._html_body)
@@ -188,7 +188,7 @@ class ChatLog():
                 self.add_header()
                 self._html_body.append(f'<h4>You Begin To Read {player}\'s Adventures From {session}</h4>')
                 sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
-                allowed_types = f'{player.replace(' ', '')}|Player|info|Text|OoC|Emote|NPC'
+                allowed_types = f'{player.replace(' ', '')}|Roll|Player|info|Text|OoC|Emote|NPC'
                 sess_df = sess_df[sess_df['Text Type'].str.contains(allowed_types)]
                 sess_df = sess_df.sort_values(by=['idx'])
                 sess_list = sess_df['New Text'].to_list()
