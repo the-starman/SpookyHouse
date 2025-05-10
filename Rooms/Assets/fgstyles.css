@@ -14,16 +14,19 @@ p {
 strong {
     font-size: 24px;
 }
+li {
+    font-size: 22px;
+}
 .player{
     color: #213448;
 }
 .info{
-    color: #94B4C1;
+    color: #9932cc ;
 }
 .gmtext{
     color: #000000;
-    background-color: #FFFFFF;
-    border: 2px solid red;
+    background-color: #ECEFCA;
+    border: 2px solid #000000;
     border-radius: 10px;
     font-size: 22px;
     padding-left: 10px;
@@ -36,5 +39,5 @@ strong {
     color: #213448;
 }
 .ooc{
-    color: #66CC66;
+    color: #009e60;
 }

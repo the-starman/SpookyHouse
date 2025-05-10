@@ -123,6 +123,10 @@ class ChatLog():
             new_text = new_text.replace(f'{player}', '')
             new_text = new_text.replace('">', f'"><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><strong>{player}</strong>')
             return new_text
+        if text_type == 'NPC':
+            npc = new_text.split(':')[0]
+            new_text = new_text.replace(f'{npc}', f'<strong>{npc}</strong>')
+            return new_text
         return new_text
 
     def set_text_type(self):
@@ -158,8 +162,8 @@ class ChatLog():
         self.set_header_footer('Rooms/Assets/fgstyles.css')
         self._html_body = []
         self.add_header()
-        self._html_body.append('<h4>You Have Entered The Spooky House Lobby</h4>')
-        self._html_body.append('<h6>Choose a room to enter or view the session ledger</h6>')
+        self._html_body.append('<h1>You Have Entered The Spooky House Lobby</h1>')
+        self._html_body.append('<h3>Choose a room to enter or view the session ledger</h3>')
         self._html_body.append('<ul>')
         self._html_body.append('<li><a href="SessionLedger.html">Session Ledger</a></li>')
         for player in self.player_names:
@@ -174,7 +178,7 @@ class ChatLog():
         self._html_body = []
         self.add_header()
         for session in self._sessions:
-            self._html_body.append(f'<h4>Session Date: {session}</h4>')
+            self._html_body.append(f'<h3>Session Date: {session}</h3>')
             sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
             sess_df = sess_df[sess_df['Text Type'] == 'GM Text']
             sess_list = sess_df['New Text'].to_list()
@@ -190,7 +194,7 @@ class ChatLog():
                 self.set_header_footer('../Assets/fgstyles.css')
                 self._html_body = []
                 self.add_header()
-                self._html_body.append(f'<h4>You Begin To Read {player}\'s Adventures From {session}</h4>')
+                self._html_body.append(f'<h3>You Begin To Read {player}\'s Adventures From {session}</h3>')
                 sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
                 allowed_types = f'{player.replace(' ', '')}|Roll|Player|info|Text|OoC|Emote|NPC'
                 sess_df = sess_df[sess_df['Text Type'].str.contains(allowed_types)]
@@ -207,8 +211,8 @@ class ChatLog():
             self.set_header_footer('Assets/fgstyles.css')
             self._html_body = []
             self.add_header()
-            self._html_body.append(f'<h4>You Have Entered {player}\'s Room</h4>')
-            self._html_body.append('<h6>Choose an adventure to read</h6>')
+            self._html_body.append(f'<h1>You Have Entered {player}\'s Room</h1>')
+            self._html_body.append('<h3>Choose an adventure to read</h3>')
             self._html_body.append('<ul>')
             for session in self._sessions:
                 self._html_body.append(f'<li><a href="ChatLogs/{player.replace(' ', '')}_{session}.html">{player}\'s Adventures On: {session}</a></li>')
