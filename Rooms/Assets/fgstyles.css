@@ -9,7 +9,7 @@ img {
 p {
     font-family: Consolas, "Courier New", monospace;
     font-size: 20px;
-    width: 700px;
+    width: 900px;
 }
 strong {
     font-size: 24px;
@@ -29,10 +29,12 @@ li {
     border: 2px solid #000000;
     border-radius: 10px;
     font-size: 22px;
+    padding-top: 5px;
     padding-left: 10px;
+    padding-bottom: 5px;
 }
 .emote{
-    color: #213448;
+    color: #7f1734;
     font-style: oblique;
 }
 .npc{
