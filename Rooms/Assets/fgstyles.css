@@ -6,11 +6,15 @@ img {
     height: 50px;
     vertical-align: middle;
 }
+div {
+    background-color: #0F171C;
+    width: 1000px;
+}
 p {
     font-family: Consolas, "Courier New", monospace;
     font-size: 20px;
-    width: 900px;
     line-height: 1.2;
+    width: 800px;
 }
 strong {
     font-size: 24px;
@@ -21,28 +25,59 @@ li {
     padding-bottom: 5px;
 }
 .player{
-    color: #213448;
+    color: #FFFFFF;
+    background-color: #101010;
+    border: 2px solid #FFFFFF;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+.gmplayer{
+    color: #FFFFFF;
+    background-color: #101010;
+    border: 2px solid #FFFFFF;
+    border-radius: 10px;
+    font-style: bold;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+.whisper{
+    color: #DA8ADB;
+    background-color: #1E1E1E;
+    border: 2px solid #979797;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
 }
 .info{
-    color: #9932cc ;
+    color: #DA8ADB;
 }
 .gmtext{
-    color: #000000;
-    background-color: #ECEFCA;
-    border: 2px solid #000000;
-    border-radius: 10px;
+    color: #FFFFFF;
+    background-color: #3B3B3B;
+    border: 2px solid #FFFFFF;
+    border-radius: 15px;
     font-size: 22px;
     padding-top: 5px;
     padding-left: 10px;
     padding-bottom: 5px;
 }
 .emote{
-    color: #7f1734;
+    color: #63F7ED;
     font-style: oblique;
 }
 .npc{
-    color: #213448;
+    color: #FFE6AB;
+    background-color: #101010;
+    border: 2px solid #FFFFFF;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
 }
 .ooc{
-    color: #009e60;
+    color: #66CC66;
 }

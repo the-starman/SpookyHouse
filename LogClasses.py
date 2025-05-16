@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib as plt
+#%%
 
 
 class ChatLog():
@@ -90,6 +92,8 @@ class ChatLog():
                 if ' [' in text:
                     return 'Roll:' + player
                 return 'Whisper<-' + player.replace(' ', '')
+            if df['Roll'] != '':
+                return 'Roll:GM'
             return'info'
         return 'not listed'
     
@@ -104,13 +108,13 @@ class ChatLog():
             return 'ooc'
         if text_type == 'GM Text':
             if text.split(':')[0] == 'GM':
-                return 'player'
+                return 'gmplayer'
             return 'gmtext'
         if 'Player' in text_type:
             return 'player'
-        if 'Whisper' in text_type or 'Roll' in text_type:
-            return 'info'
-        if text_type == 'info':
+        if 'Whisper' in text_type:
+            return 'whisper'
+        if text_type == 'info' or 'Roll' in text_type:
             return 'info'
         if text_type == 'not listed':
             return 'info'
@@ -142,8 +146,8 @@ class ChatLog():
         self._sessions_df['Players'] = self._sessions_df.apply(lambda x: x['Text'].split(':')[0] if '=' in x['Roll'] else '', axis=1)
 
     def set_header_footer(self, css_file):
-        self.html_header = ['<!DOCTYPE html>', '<html>', '<head>', f'<link rel="stylesheet" href="{css_file}">', '</head>', '<body>']
-        self.html_footer = ['</body>', '</html>']
+        self.html_header = ['<!DOCTYPE html>', '<html>', '<head>', f'<link rel="stylesheet" href="{css_file}">', '</head>', '<body>', '<div>']
+        self.html_footer = ['</div>', '</body>', '</html>']
 
     def add_header(self):
         for line in self.html_header:
@@ -152,6 +156,30 @@ class ChatLog():
     def add_footer(self):
         for line in self.html_footer:
             self._html_body.append(line)
+
+    def plot_player_rolls(self, player=''):
+        #%%
+        filename = 'Total'
+        roll_df = self._sessions_df[self._sessions_df['Roll'].str.contains('d100')][['Roll', 'Text Type']].copy()
+        roll_df = roll_df[~roll_df['Text Type'].str.contains('Roll:GM')]
+        if player != '':
+            roll_df = roll_df[roll_df['Text Type'].str.contains(f'Roll:{player}')]
+            filename = player.replace(' ', '')
+        roll_df['Roll#'] = roll_df['Roll'].str.split(' = ').str[-1].astype(int)
+        roll_df['Roll##'] = (roll_df['Roll#']/5).round().astype(int)*5
+        count_df = roll_df.groupby(['Roll##'])['Roll##'].size().reset_index(name='counts')
+        count_df = count_df.sort_values(['Roll##'])
+        ax = count_df.plot(kind='bar', x='Roll##', y='counts', width=0.9)
+        fig = ax.get_figure()
+        fig.savefig(f'Rooms/Assets/Images/{filename}Roll.png')
+        plt.close(fig)
+        return
+    
+    def plot_rolls(self):
+        self.plot_player_rolls()
+        for player in self.player_names:
+            self.plot_player_rolls(player=player)
+        return
     
     def write_html_file(self, file_name, html_body):
         with open(file_name, 'w') as file:
@@ -198,6 +226,7 @@ class ChatLog():
                 sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
                 allowed_types = f'{player.replace(' ', '')}|Roll|Player|info|Text|OoC|Emote|NPC'
                 sess_df = sess_df[sess_df['Text Type'].str.contains(allowed_types)]
+                sess_df = sess_df[~sess_df['Text Type'].str.contains('Roll:GM')]
                 sess_df = sess_df.sort_values(by=['idx'])
                 sess_list = sess_df['New Text'].to_list()
                 for text in sess_list:
@@ -221,3 +250,4 @@ class ChatLog():
         _temp = 'temp'
 
     
+# %%

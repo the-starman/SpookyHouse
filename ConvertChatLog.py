@@ -1,4 +1,5 @@
 from LogClasses import *
+#%%
 
 chat_obj = ChatLog()
 chat_obj.chat_folder = 'C:\\Users\\zmcke\\OneDrive\\Documents\\Spooky House'
@@ -52,6 +53,7 @@ chat_obj.remove_bad_sessions()
 chat_obj.remove_bad_lines()
 chat_obj.set_text_type()
 chat_obj.set_new_text()
+chat_obj.plot_rolls()
 chat_obj.create_lobby()
 chat_obj.create_session_ledger()
 chat_obj.create_rooms()
