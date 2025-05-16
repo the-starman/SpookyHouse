@@ -128,20 +128,20 @@ class ChatLog():
             strong = f'<strong>{player}</strong>'
             new_text = new_text.replace(f'{player}', '')
             new_text = new_text.replace('<p', f'<div class="row"><div>{image}</div><div>{strong}</div><div><p')
-            new_text = new_text.replace('</p>', '</p></div><div>')
+            new_text = new_text.replace('</p>', '</p></div></div>')
             return new_text
         if text_type == 'NPC':
             npc = new_text.split(':')[0]
             image = ' '
             strong = f'<strong>{npc}</strong>'
             new_text = new_text.replace('<p', f'<div class="row"><div>{image}</div><div>{strong}</div><div><p')
-            new_text = new_text.replace('</p>', '</p></div><div>')
+            new_text = new_text.replace('</p>', '</p></div></div>')
             return new_text
         if df['Font Type'] == 'gmplayer':
             image = ' '
             strong = f'<strong>GM</strong>'
             new_text = new_text.replace('<p', f'<div class="row"><div>{image}</div><div>{strong}</div><div><p')
-            new_text = new_text.replace('</p>', '</p></div><div>')
+            new_text = new_text.replace('</p>', '</p></div></div>')
             return new_text
         return new_text
 
