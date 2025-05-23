@@ -76,7 +76,7 @@ class ChatLog():
         if font in self.emote_fonts:
             return 'Emote'
         if font in self.npc_fonts:
-            return 'NPC:' + player
+            return 'NPC'
         if font in self.ooc_fonts:
             return'OoC'
         if font in self.player_fonts:
@@ -102,7 +102,7 @@ class ChatLog():
         text = df['Text']
         if text_type == 'Emote':
             return 'emote'
-        if 'NPC' in text_type:
+        if text_type == 'NPC':
             return 'npc'
         if text_type == 'OoC':
             return 'ooc'
@@ -120,44 +120,29 @@ class ChatLog():
             return 'info'
     
     def check_player_text(self, df):
-        font_type = df['Font Type']
+        text_type = df['Text Type']
         new_text = df['New Text']
-        if font_type == 'player':
-            player = df['Text Type'].replace('Player:', '')
+        if 'Player:' in text_type:
+            player = text_type.replace('Player:', '')
             image = f'<p class="image"><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"></p>'
-            strong = f'<p class="name"><strong>{player}</strong></p>'
+            strong = f'<p class="name"><strong>{player}:</strong></p>'
             new_text = new_text.replace(f'{player}: ', '')
-            new_text = new_text.replace('[D]', '<div class="row">')
-            new_text = new_text.replace('[di]', f'<div>{image}</div>')
-            new_text = new_text.replace('[dn]', f'<div>{strong}</div>')
-            new_text = new_text.replace('[dt]', '<div>')
-            new_text = new_text.replace('[/D]', '</div></div>')
+            new_text = new_text.replace('</p>', '</p></div></div>')
+            new_text = new_text.replace('<p', f'<div class="row"><div>{image}</div><div>{strong}</div><div><p')
             return new_text
-        if font_type == 'npc':
-            npc = df['Text Type'].replace('NPC:', '')
-            image = '<p class="image"> </p>'
-            strong = f'<p class="name"><strong>{npc}</strong></p>'
-            new_text = new_text.replace(f'{npc}: ', '')
-            new_text = new_text.replace('[D]', '<div class="row">')
-            new_text = new_text.replace('[di]', f'<div>{image}</div>')
-            new_text = new_text.replace('[dn]', f'<div>{strong}</div>')
-            new_text = new_text.replace('[dt]', '<div>')
-            new_text = new_text.replace('[/D]', '</div></div>')
+        if text_type == 'NPC':
+            npc = new_text.split(':')[0]
+            image = ' '
+            strong = f'<strong>{npc}</strong>'
+            new_text = new_text.replace('<p', f'<div class="row"><div>{image}</div><div>{strong}<p')
+            new_text = new_text.replace('</p>', '</p></div></div>')
             return new_text
-        if font_type == 'gmplayer':
-            image = '<p class="image"> </p>'
-            strong = f'<p class="name"><strong>GM</strong></p>'
-            new_text = new_text.replace('[D]', '<div class="row">')
-            new_text = new_text.replace('[di]', f'<div>{image}</div>')
-            new_text = new_text.replace('[dn]', f'<div>{strong}</div>')
-            new_text = new_text.replace('[dt]', '<div>')
-            new_text = new_text.replace('[/D]', '</div></div>')
+        if df['Font Type'] == 'gmplayer':
+            image = ' '
+            strong = f'<strong>GM</strong>'
+            new_text = new_text.replace('<p', f'<div class="row"><div>{image}</div><div>{strong}<p')
+            new_text = new_text.replace('</p>', '</p></div></div>')
             return new_text
-        new_text = new_text.replace('[D]', '')
-        new_text = new_text.replace('[di]', '')
-        new_text = new_text.replace('[dn]', '')
-        new_text = new_text.replace('[dt]', '')
-        new_text = new_text.replace('[/D]', '')
         return new_text
 
     def set_text_type(self):
@@ -165,7 +150,7 @@ class ChatLog():
         self._sessions_df['Font Type'] = self._sessions_df.apply(self.check_font_type, axis=1)
 
     def set_new_text(self):
-        self._sessions_df['New Text'] = self._sessions_df.apply(lambda x: f'[D][di][dn][dt]<p class="{x['Font Type']}">{x['Text']}</p>[/D]', axis=1)
+        self._sessions_df['New Text'] = self._sessions_df.apply(lambda x: f'<p class="{x['Font Type']}">{x['Text']}</p>', axis=1)
         self._sessions_df['New Text'] = self._sessions_df.apply(self.check_player_text, axis=1)
 
     def set_players(self):
