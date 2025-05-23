@@ -14,7 +14,6 @@ p {
     font-family: Consolas, "Courier New", monospace;
     font-size: 20px;
     line-height: 1.2;
-    width: 800px;
 }
 strong {
     font-size: 24px;
@@ -23,6 +22,20 @@ li {
     font-size: 22px;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+.row {
+  display: flex;
+  align-items: center;
+}
+.row > div {
+  margin: 10px;
+  padding: 20px;
+}
+.image {
+    width: 70px;
+}
+.name {
+    width: 200px;
 }
 .player{
     color: #FFFFFF;
