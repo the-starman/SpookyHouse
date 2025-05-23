@@ -124,32 +124,32 @@ class ChatLog():
         new_text = df['New Text']
         if font_type == 'player':
             player = df['Text Type'].replace('Player:', '')
-            image = f'<p class="image"><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"></p>'
-            strong = f'<p class="name"><strong>{player}</strong></p>'
+            image = f'<p><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"></p>'
+            strong = f'<p><strong>{player}</strong></p>'
             new_text = new_text.replace(f'{player}: ', '')
             new_text = new_text.replace('[D]', '<div class="row">')
-            new_text = new_text.replace('[di]', f'<div>{image}</div>')
-            new_text = new_text.replace('[dn]', f'<div>{strong}</div>')
+            new_text = new_text.replace('[di]', f'<div class="image">{image}</div>')
+            new_text = new_text.replace('[dn]', f'<div class="name">{strong}</div>')
             new_text = new_text.replace('[dt]', '<div>')
             new_text = new_text.replace('[/D]', '</div></div>')
             return new_text
         if font_type == 'npc':
             npc = df['Text Type'].replace('NPC:', '')
-            image = '<p class="image"> </p>'
-            strong = f'<p class="name"><strong>{npc}</strong></p>'
+            image = '<p> </p>'
+            strong = f'<p><strong>{npc}</strong></p>'
             new_text = new_text.replace(f'{npc}: ', '')
             new_text = new_text.replace('[D]', '<div class="row">')
-            new_text = new_text.replace('[di]', f'<div>{image}</div>')
-            new_text = new_text.replace('[dn]', f'<div>{strong}</div>')
+            new_text = new_text.replace('[di]', f'<div class="image">{image}</div>')
+            new_text = new_text.replace('[dn]', f'<div class="name">{strong}</div>')
             new_text = new_text.replace('[dt]', '<div>')
             new_text = new_text.replace('[/D]', '</div></div>')
             return new_text
         if font_type == 'gmplayer':
-            image = '<p class="image"> </p>'
-            strong = f'<p class="name"><strong>GM</strong></p>'
+            image = '<p> </p>'
+            strong = f'<p><strong>GM</strong></p>'
             new_text = new_text.replace('[D]', '<div class="row">')
-            new_text = new_text.replace('[di]', f'<div>{image}</div>')
-            new_text = new_text.replace('[dn]', f'<div>{strong}</div>')
+            new_text = new_text.replace('[di]', f'<div class="image">{image}</div>')
+            new_text = new_text.replace('[dn]', f'<div class="name">{strong}</div>')
             new_text = new_text.replace('[dt]', '<div>')
             new_text = new_text.replace('[/D]', '</div></div>')
             return new_text
