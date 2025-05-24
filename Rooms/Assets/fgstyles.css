@@ -17,10 +17,6 @@ p {
     /* padding-left: 10px; */
     margin: 10px;
 }
-strong {
-    font-size: 24px;
-    color: #FFFFFF;
-}
 h1 {
     color: #FFFFFF;
 }
@@ -28,7 +24,7 @@ h3 {
     color: #FFFFFF;
 }
 strong {
-    font-size: 24px;
+    font-size: 22px;
     color: #FFFFFF;
 }
 /* unvisited link */
@@ -55,10 +51,12 @@ li {
     padding: 5px;
 }
 .image {
-    width: min-content;
+    flex-shrink: 0;
+    width: 60px;
 }
 .name {
-    width: min-content;
+    flex-shrink: 0;
+    width: 200px;
 }
 .roll {
     width: 300px;
