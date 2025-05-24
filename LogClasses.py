@@ -219,7 +219,7 @@ class ChatLog():
         self._html_body.append('<h3>Choose a room to enter or view the session ledger</h3>')
         self._html_body.append('<ul>')
         self._html_body.append('<li><a href="SessionLedger.html">Session Ledger</a></li>')
-        self._html_body.append('<li><a href="Rooms/DiceRolls.html">Session Ledger</a></li>')
+        self._html_body.append('<li><a href="Rooms/DiceRolls.html">Dice Rolls</a></li>')
         for player in self.player_names:
             self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
         self._html_body.append('</ul>')
@@ -279,13 +279,13 @@ class ChatLog():
         self.set_header_footer('../Assets/fgstyles.css')
         self._html_body = []
         self.add_header()
-        self._html_body.append(f'<h1>You Look At The Totally Normal And Random Dice Rolls</h1>')
+        self._html_body.append(f'<h1>You Look At The Totally Normal And Random Dice Rolls (D100)</h1>')
         self._html_body.append('<ul>')
         self._html_body.append(f'<li>TOTAL: <img class="roll" src="../Assets/Images/TotalRoll.png" alt="Total"></li>')
         for player in self.player_names:
             self._html_body.append(f'<li><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}"></li>')
         self.add_footer()
-        self.write_html_file(f'Rooms/DiceRolls.html', self._html_body)
+        self.write_html_file(f'Rooms/ChatLogs/DiceRolls.html', self._html_body)
 
     
 # %%
