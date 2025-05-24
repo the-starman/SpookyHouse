@@ -196,6 +196,7 @@ class ChatLog():
         count_df = count_df.sort_values(['Roll##'])
         ax = count_df.plot(kind='bar', x='Roll##', y='counts', width=0.9)
         fig = ax.get_figure()
+        fig.set_alpha(0.5)
         fig.savefig(f'Rooms/Assets/Images/{filename}Roll.png')
         plt.close(fig)
         return
