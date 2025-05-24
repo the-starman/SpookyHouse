@@ -134,7 +134,7 @@ class ChatLog():
             return new_text
         if font_type == 'npc':
             npc = df['Text Type'].replace('NPC:', '')
-            image = '<p> </p>'
+            image = '<p><img src="../Assets/Images/PlaceHolder.png"></p>'
             strong = f'<p><strong>{npc}</strong></p>'
             new_text = new_text.replace(f'{npc}: ', '')
             new_text = new_text.replace('[D]', '<div class="row">')
@@ -144,8 +144,9 @@ class ChatLog():
             new_text = new_text.replace('[/D]', '</div></div>')
             return new_text
         if font_type == 'gmplayer':
-            image = '<p> </p>'
+            image = '<p><img src="../Assets/Images/PlaceHolder.png"></p>'
             strong = f'<p><strong>GM</strong></p>'
+            new_text = new_text.replace(f'GM: ', '')
             new_text = new_text.replace('[D]', '<div class="row">')
             new_text = new_text.replace('[di]', f'<div class="image">{image}</div>')
             new_text = new_text.replace('[dn]', f'<div class="name">{strong}</div>')
