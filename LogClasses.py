@@ -185,6 +185,7 @@ class ChatLog():
 
     def plot_player_rolls(self, player=''):
         filename = 'Total'
+        roll_bins = [0,10,20,30,40,50,60,70,80,90,100]
         roll_df = self._sessions_df[self._sessions_df['Roll'].str.contains('d100')][['Roll', 'Text Type']].copy()
         roll_df = roll_df[~roll_df['Text Type'].str.contains('Roll:GM')]
         if player != '':
@@ -194,9 +195,15 @@ class ChatLog():
         roll_df['Roll##'] = (roll_df['Roll#']/5).round().astype(int)*5
         count_df = roll_df.groupby(['Roll##'])['Roll##'].size().reset_index(name='counts')
         count_df = count_df.sort_values(['Roll##'])
-        ax = count_df.plot(kind='bar', x='Roll##', y='counts', width=0.9)
+        # ax = count_df.plot(kind='bar', x='Roll##', y='counts', width=0.9, legend=False)
+        ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#618685", xticks=roll_bins)
+        ax.set_facecolor("#36486b")
+        ax.set_ylabel('Number of Rolls', color="#fefbd8", size=14)
+        ax.set_xlabel('D100 Roll', color="#fefbd8", size=14)
+        ax.tick_params(color="#fefbd8", labelcolor="#fefbd8", labelsize=14)
         fig = ax.get_figure()
-        fig.patch.set_alpha(0.5)
+        fig.patch.set_alpha(0)
+        
         fig.savefig(f'Rooms/Assets/Images/{filename}Roll.png')
         plt.close(fig)
         return
@@ -220,7 +227,7 @@ class ChatLog():
         self._html_body.append('<h3>Choose a room to enter or view the session ledger</h3>')
         self._html_body.append('<ul>')
         self._html_body.append('<li><a href="SessionLedger.html">Session Ledger</a></li>')
-        self._html_body.append('<li><a href="Rooms/DiceRolls.html">Dice Rolls</a></li>')
+        self._html_body.append('<li><a href="Rooms/ChatLogs/DiceRolls.html">Dice Rolls</a></li>')
         for player in self.player_names:
             self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
         self._html_body.append('</ul>')
@@ -286,7 +293,7 @@ class ChatLog():
         for player in self.player_names:
             self._html_body.append(f'<li><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}"></li>')
         self.add_footer()
-        self.write_html_file(f'Rooms/ChatLogs/DiceRolls.html', self._html_body)
+        self.write_html_file('Rooms/ChatLogs/DiceRolls.html', self._html_body)
 
     
 # %%
