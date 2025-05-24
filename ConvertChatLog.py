@@ -58,5 +58,6 @@ chat_obj.create_lobby()
 chat_obj.create_session_ledger()
 chat_obj.create_rooms()
 chat_obj.create_player_session()
+chat_obj.create_session_rolls()
 print('Completed')
 temp = 'temp'

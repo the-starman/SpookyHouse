@@ -1,6 +1,5 @@
 import pandas as pd
 from matplotlib import pyplot as plt
-#%%
 
 
 class ChatLog():
@@ -185,7 +184,6 @@ class ChatLog():
             self._html_body.append(line)
 
     def plot_player_rolls(self, player=''):
-        #%%
         filename = 'Total'
         roll_df = self._sessions_df[self._sessions_df['Roll'].str.contains('d100')][['Roll', 'Text Type']].copy()
         roll_df = roll_df[~roll_df['Text Type'].str.contains('Roll:GM')]
@@ -221,6 +219,7 @@ class ChatLog():
         self._html_body.append('<h3>Choose a room to enter or view the session ledger</h3>')
         self._html_body.append('<ul>')
         self._html_body.append('<li><a href="SessionLedger.html">Session Ledger</a></li>')
+        self._html_body.append('<li><a href="Rooms/DiceRolls.html">Session Ledger</a></li>')
         for player in self.player_names:
             self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
         self._html_body.append('</ul>')
@@ -275,6 +274,18 @@ class ChatLog():
             self.add_footer()
             self.write_html_file(f'Rooms/{player.replace(' ', '')}.html', self._html_body)
         _temp = 'temp'
+
+    def create_session_rolls(self):
+        self.set_header_footer('../Assets/fgstyles.css')
+        self._html_body = []
+        self.add_header()
+        self._html_body.append(f'<h1>You Look At The Totally Normal And Random Dice Rolls</h1>')
+        self._html_body.append('<ul>')
+        self._html_body.append(f'<li>TOTAL: <img class="roll" src="../Assets/Images/TotalRoll.png" alt="Total"></li>')
+        for player in self.player_names:
+            self._html_body.append(f'<li><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}"></li>')
+        self.add_footer()
+        self.write_html_file(f'Rooms/DiceRolls.html', self._html_body)
 
     
 # %%

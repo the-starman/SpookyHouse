@@ -1,5 +1,5 @@
 body {
-    background-color: #f0f8ff;
+    background-color: #0F171C;
 }
 img {
     width: 50px;
@@ -14,6 +14,7 @@ p {
     font-family: Consolas, "Courier New", monospace;
     font-size: 20px;
     line-height: 1.2;
+    padding-left: 10px;
 }
 strong {
     font-size: 24px;
@@ -40,23 +41,28 @@ a:visited {
 }
 li {
     font-size: 22px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     color: teal;
 }
 .row {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 .row > div {
-  margin: 10px;
-  padding: 20px;
+    margin: 5px;
+    padding: 5px;
 }
 .image {
-    width: 70px;
+    width: min-content;
 }
 .name {
-    width: 200px;
+    width: min-content;
+}
+.roll {
+    width: 300px;
+    height: 200px;
+    vertical-align: middle;
 }
 .player{
     color: #FFFFFF;
