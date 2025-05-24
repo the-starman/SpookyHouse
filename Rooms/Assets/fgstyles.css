@@ -24,7 +24,7 @@ h3 {
     color: #FFFFFF;
 }
 strong {
-    font-size: 22px;
+    font-size: 20px;
     color: #FFFFFF;
 }
 /* unvisited link */
@@ -56,7 +56,7 @@ li {
 }
 .name {
     flex-shrink: 0;
-    width: 200px;
+    width: 120px;
 }
 .roll {
     width: 300px;
