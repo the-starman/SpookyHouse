@@ -63,6 +63,9 @@ li {
     height: 450px;
     vertical-align: middle;
 }
+.roll_img {
+    vertical-align: middle;
+}
 .player{
     color: #FFFFFF;
     background-color: #101010;

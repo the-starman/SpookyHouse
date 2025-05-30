@@ -199,7 +199,8 @@ class ChatLog():
         count_df = count_df.sort_values(['Roll##'])
         ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#C7D9DD", xticks=roll_bins, rwidth=0.95)
         # ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#618685", xticks=roll_bins)
-        ax.set_title(f'Total D100 Rolls: {len(roll_df)}', color="#fefbd8", size=14)
+        if player == '': player = 'Total'
+        ax.set_title(f'{player} D100 Rolls ({len(roll_df)})', color="#fefbd8", size=14)
         ax.set_facecolor("#0F171C")
         # ax.set_facecolor("#36486b")
         ax.set_ylabel('Number of Rolls', color="#fefbd8", size=14)
@@ -301,7 +302,7 @@ class ChatLog():
             if new_row:
                 self._html_body.append('<div class="row">')
             self._html_body.append('<div>')
-            self._html_body.append(f'<img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}">')
+            self._html_body.append(f'<img class="roll_img" src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}">')
             self._html_body.append('</div>')
             if not new_row:
                 self._html_body.append('</div>')
