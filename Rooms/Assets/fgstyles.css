@@ -64,7 +64,8 @@ li {
     vertical-align: middle;
 }
 .roll_img {
-    vertical-align: middle;
+  display: block;
+  margin: auto;
 }
 .player{
     color: #FFFFFF;
