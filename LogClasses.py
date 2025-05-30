@@ -184,6 +184,7 @@ class ChatLog():
         for line in self.html_footer:
             self._html_body.append(line)
 
+    # todo: add roll count
     def plot_player_rolls(self, player=''):
         filename = 'Total'
         roll_bins = [0,10,20,30,40,50,60,70,80,90,100]
@@ -196,9 +197,11 @@ class ChatLog():
         roll_df['Roll##'] = (roll_df['Roll#']/5).round().astype(int)*5
         count_df = roll_df.groupby(['Roll##'])['Roll##'].size().reset_index(name='counts')
         count_df = count_df.sort_values(['Roll##'])
-        # ax = count_df.plot(kind='bar', x='Roll##', y='counts', width=0.9, legend=False)
-        ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#618685", xticks=roll_bins)
-        ax.set_facecolor("#36486b")
+        ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#C7D9DD", xticks=roll_bins, rwidth=0.95)
+        # ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#618685", xticks=roll_bins)
+        ax.set_title(f'Total D100 Rolls: {len(roll_df)}', color="#fefbd8", size=14)
+        ax.set_facecolor("#0F171C")
+        # ax.set_facecolor("#36486b")
         ax.set_ylabel('Number of Rolls', color="#fefbd8", size=14)
         ax.set_xlabel('D100 Roll', color="#fefbd8", size=14)
         ax.tick_params(color="#fefbd8", labelcolor="#fefbd8", labelsize=14)
@@ -251,6 +254,7 @@ class ChatLog():
         self.write_html_file('SessionLedger.html', self._html_body)
         _temp = 'temp'
 
+    # todo: add GM Room
     def create_player_session(self):
         for player in self.player_names:
             for session in self._sessions:
@@ -288,11 +292,20 @@ class ChatLog():
         self.set_header_footer('../Assets/fgstyles.css')
         self._html_body = []
         self.add_header()
-        self._html_body.append(f'<h1>You Look At The Totally Normal And Random Dice Rolls (D100)</h1>')
-        self._html_body.append('<ul>')
-        self._html_body.append(f'<li>TOTAL: <img class="roll" src="../Assets/Images/TotalRoll.png" alt="Total"></li>')
+        self._html_body.append('<h1>You Look At The Totally Normal And Random Dice Rolls (D100)</h1>')
+        self._html_body.append('<div class="row"><div>')
+        self._html_body.append('<img class="roll" src="../Assets/Images/TotalRoll.png" alt="Total">')
+        self._html_body.append('</div></div>')
+        new_row = True
         for player in self.player_names:
-            self._html_body.append(f'<li><img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}"></li>')
+            if new_row:
+                self._html_body.append('<div class="row"><div>')
+            self._html_body.append('</div><div>')
+            self._html_body.append(f'<img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}">')
+            self._html_body.append('</div>')
+            if not new_row:
+                self._html_body.append('</div>')
+            new_row = not new_row
         self.add_footer()
         self.write_html_file('Rooms/ChatLogs/DiceRolls.html', self._html_body)
 
