@@ -299,8 +299,8 @@ class ChatLog():
         new_row = True
         for player in self.player_names:
             if new_row:
-                self._html_body.append('<div class="row"><div>')
-            self._html_body.append('</div><div>')
+                self._html_body.append('<div class="row">')
+            self._html_body.append('<div>')
             self._html_body.append(f'<img src="../Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><img class="roll" src="../Assets/Images/{player.replace(' ', '')}Roll.png" alt="{player}">')
             self._html_body.append('</div>')
             if not new_row:
