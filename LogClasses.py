@@ -56,6 +56,7 @@ class ChatLog():
     def clean_players(self):
         for player in self.player_cleanup:
             self._sessions_df['Text'] = self._sessions_df['Text'].str.replace(player[0], player[1])
+        self.player_names.append('ALL')
 
     def remove_bad_sessions(self):
         count_df = self._sessions_df.groupby(['Session'])['Session'].size().reset_index(name='counts')
@@ -234,7 +235,10 @@ class ChatLog():
         self._html_body.append('<li><a href="SessionLedger.html">Session Ledger</a></li>')
         self._html_body.append('<li><a href="Rooms/ChatLogs/DiceRolls.html">Dice Rolls</a></li>')
         for player in self.player_names:
-            self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
+            if player == 'ALL':
+                self._html_body.append('<li><a href="Rooms/ALL.html">Secret Room (GM)</a></li>')
+            else:
+                self._html_body.append(f'<li><img src="Rooms/Assets/Images/{player.replace(' ', '')}.png" alt="{player}"><a href="Rooms/{player.replace(' ', '')}.html">{player}\'s Room</a></li>')
         self._html_body.append('</ul>')
         self.add_footer()
         self.write_html_file('Lobby.html', self._html_body)
@@ -256,35 +260,63 @@ class ChatLog():
         _temp = 'temp'
 
     # todo: add GM Room
-    def create_player_session(self):
-        for player in self.player_names:
-            for session in self._sessions:
-                self.set_header_footer('../Assets/fgstyles.css')
-                self._html_body = []
-                self.add_header()
+    # def create_player_session(self):
+    #     for player in self.player_names:
+    #         for session in self._sessions:
+    #             self.set_header_footer('../Assets/fgstyles.css')
+    #             self._html_body = []
+    #             self.add_header()
+    #             self._html_body.append(f'<h3>You Begin To Read {player}\'s Adventures From {session}</h3>')
+    #             sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
+    #             allowed_types = f'{player.replace(' ', '')}|Roll|Player|info|Text|OoC|Emote|NPC'
+    #             sess_df = sess_df[sess_df['Text Type'].str.contains(allowed_types)]
+    #             sess_df = sess_df[~sess_df['Text Type'].str.contains('Roll:GM')]
+    #             sess_df = sess_df.sort_values(by=['idx'])
+    #             sess_list = sess_df['New Text'].to_list()
+    #             for text in sess_list:
+    #                 self._html_body.append(text)
+    #             self.add_footer()
+    #             self.write_html_file(f'Rooms/ChatLogs/{player.replace(' ', '')}_{session}.html', self._html_body)
+    #     return
+    def create_session(self, session='', player=''):
+            self.set_header_footer('../Assets/fgstyles.css')
+            self._html_body = []
+            self.add_header()
+            if player == 'ALL':
+                self._html_body.append(f'<h3>You Begin To Read Everyones Adventures From {session}</h3>')
+                sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
+            else:
                 self._html_body.append(f'<h3>You Begin To Read {player}\'s Adventures From {session}</h3>')
                 sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
                 allowed_types = f'{player.replace(' ', '')}|Roll|Player|info|Text|OoC|Emote|NPC'
                 sess_df = sess_df[sess_df['Text Type'].str.contains(allowed_types)]
                 sess_df = sess_df[~sess_df['Text Type'].str.contains('Roll:GM')]
-                sess_df = sess_df.sort_values(by=['idx'])
-                sess_list = sess_df['New Text'].to_list()
-                for text in sess_list:
-                    self._html_body.append(text)
-                self.add_footer()
-                self.write_html_file(f'Rooms/ChatLogs/{player.replace(' ', '')}_{session}.html', self._html_body)
-        return
+            sess_df = sess_df.sort_values(by=['idx'])
+            sess_list = sess_df['New Text'].to_list()
+            for text in sess_list:
+                self._html_body.append(text)
+            self.add_footer()
+            self.write_html_file(f'Rooms/ChatLogs/{player.replace(' ', '')}_{session}.html', self._html_body)
 
-    def create_rooms(self):
+    def create_player_session(self):
+        for session in self._sessions:
+            for player in self.player_names:
+                self.create_session(session=session, player=player)
+        return
+    
+    def create_player_rooms(self):
         for player in self.player_names:
             self.set_header_footer('Assets/fgstyles.css')
             self._html_body = []
             self.add_header()
-            self._html_body.append(f'<h1>You Have Entered {player}\'s Room</h1>')
+            if player == 'ALL':
+                self._html_body.append(f'<h1>You Have Entered The Secret Room</h1>')
+            else:
+                self._html_body.append(f'<h1>You Have Entered {player}\'s Room</h1>')
             self._html_body.append('<h3>Choose an adventure to read</h3>')
             self._html_body.append('<ul>')
             for session in self._sessions:
-                self._html_body.append(f'<li><a href="ChatLogs/{player.replace(' ', '')}_{session}.html">{player}\'s Adventures On: {session}</a></li>')
+                self._html_body.append(f'<li><a href="ChatLogs/{player.replace(' ', '')}_{session}.html">Adventures From: {session}</a></li>')
             self.add_footer()
             self.write_html_file(f'Rooms/{player.replace(' ', '')}.html', self._html_body)
         _temp = 'temp'
