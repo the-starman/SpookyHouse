@@ -185,7 +185,6 @@ class ChatLog():
         for line in self.html_footer:
             self._html_body.append(line)
 
-    # todo: add roll count
     def plot_player_rolls(self, player=''):
         filename = 'Total'
         roll_bins = [0,10,20,30,40,50,60,70,80,90,100]
@@ -199,17 +198,14 @@ class ChatLog():
         count_df = roll_df.groupby(['Roll##'])['Roll##'].size().reset_index(name='counts')
         count_df = count_df.sort_values(['Roll##'])
         ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#C7D9DD", xticks=roll_bins, rwidth=0.95)
-        # ax = roll_df.plot(kind='hist', bins=20, x='Roll#', legend=False, color="#618685", xticks=roll_bins)
         if player == '': player = 'Total'
         ax.set_title(f'{player} D100 Rolls ({len(roll_df)})', color="#fefbd8", size=14)
         ax.set_facecolor("#0F171C")
-        # ax.set_facecolor("#36486b")
         ax.set_ylabel('Number of Rolls', color="#fefbd8", size=14)
         ax.set_xlabel('D100 Roll', color="#fefbd8", size=14)
         ax.tick_params(color="#fefbd8", labelcolor="#fefbd8", labelsize=14)
         fig = ax.get_figure()
         fig.patch.set_alpha(0)
-        
         fig.savefig(f'Rooms/Assets/Images/{filename}Roll.png')
         plt.close(fig)
         return
@@ -217,8 +213,15 @@ class ChatLog():
     def plot_rolls(self):
         self.plot_player_rolls()
         for player in self.player_names:
-            self.plot_player_rolls(player=player)
+            if player != 'ALL': self.plot_player_rolls(player=player)
         return
+    
+    def set_player_skills(self, player):
+        play_skill_df = self._sessions_df[(self._sessions_df['Text'].str.contains(r'\[SKILL\]')) & (self._sessions_df['Text Type'].str.contains(f'Roll:{player}'))][['Text', 'Text Type']].copy()
+        play_skill_df['Skill'] = play_skill_df['Text'].str.split(r'\[SKILL\] ').str[1].str.split(r' \(').str[0]
+        count_df = play_skill_df.groupby(['Skill'])['Skill'].size().reset_index(name='counts')
+        count_df['Skill#'] = count_df['Skill'] + ':' + count_df['counts'].astype(str)
+        return count_df['Skill#'].to_list()
     
     def write_html_file(self, file_name, html_body):
         with open(file_name, 'w') as file:
@@ -259,25 +262,6 @@ class ChatLog():
         self.write_html_file('SessionLedger.html', self._html_body)
         _temp = 'temp'
 
-    # todo: add GM Room
-    # def create_player_session(self):
-    #     for player in self.player_names:
-    #         for session in self._sessions:
-    #             self.set_header_footer('../Assets/fgstyles.css')
-    #             self._html_body = []
-    #             self.add_header()
-    #             self._html_body.append(f'<h3>You Begin To Read {player}\'s Adventures From {session}</h3>')
-    #             sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
-    #             allowed_types = f'{player.replace(' ', '')}|Roll|Player|info|Text|OoC|Emote|NPC'
-    #             sess_df = sess_df[sess_df['Text Type'].str.contains(allowed_types)]
-    #             sess_df = sess_df[~sess_df['Text Type'].str.contains('Roll:GM')]
-    #             sess_df = sess_df.sort_values(by=['idx'])
-    #             sess_list = sess_df['New Text'].to_list()
-    #             for text in sess_list:
-    #                 self._html_body.append(text)
-    #             self.add_footer()
-    #             self.write_html_file(f'Rooms/ChatLogs/{player.replace(' ', '')}_{session}.html', self._html_body)
-    #     return
     def create_session(self, session='', player=''):
             self.set_header_footer('../Assets/fgstyles.css')
             self._html_body = []
@@ -317,9 +301,25 @@ class ChatLog():
             self._html_body.append('<ul>')
             for session in self._sessions:
                 self._html_body.append(f'<li><a href="ChatLogs/{player.replace(' ', '')}_{session}.html">Adventures From: {session}</a></li>')
+            self._html_body.append('</ul>')
+            if player != 'ALL':
+                player_skills = self.set_player_skills(player)
+                self._html_body.append('<br>')
+                self._html_body.append('<table>')
+                self._html_body.append('<tr>')
+                self._html_body.append('<th>Skill</th>')
+                self._html_body.append('<th>Uses</th>')
+                self._html_body.append('</tr>')
+                for skill in player_skills:
+                    s_list = skill.split(':')
+                    self._html_body.append('<tr>')
+                    self._html_body.append(f'<td>{s_list[0]}</td>')
+                    self._html_body.append(f'<td>{s_list[1]}</td>')
+                    self._html_body.append('</tr>')
+                self._html_body.append('</table>')
             self.add_footer()
             self.write_html_file(f'Rooms/{player.replace(' ', '')}.html', self._html_body)
-        _temp = 'temp'
+            _temp = 'temp'
 
     def create_session_rolls(self):
         self.set_header_footer('../Assets/fgstyles.css')
@@ -341,6 +341,3 @@ class ChatLog():
             new_row = not new_row
         self.add_footer()
         self.write_html_file('Rooms/ChatLogs/DiceRolls.html', self._html_body)
-
-    
-# %%

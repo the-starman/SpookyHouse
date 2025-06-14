@@ -6,6 +6,27 @@ img {
     height: 50px;
     vertical-align: middle;
 }
+table {
+    border-collapse: collapse;
+    width: 30%;
+    margin: 10px;
+    font-size: 20px;
+}
+
+th, td {
+  text-align: left;
+  padding: 2px;
+}
+
+td {
+    color: teal;
+}
+
+th {
+    background-color: teal;
+    color: white;
+}
+
 div {
     background-color: #0F171C;
     width: 1000px;
