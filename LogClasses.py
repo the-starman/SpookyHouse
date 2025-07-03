@@ -341,3 +341,12 @@ class ChatLog():
             new_row = not new_row
         self.add_footer()
         self.write_html_file('Rooms/ChatLogs/DiceRolls.html', self._html_body)
+
+    def create_rolls_csv(self):
+        roll_df = self._sessions_df[self._sessions_df['Roll'].str.contains('=')][['Session', 'Text', 'Roll', 'Text Type']].copy()
+        roll_df['Dice'] = roll_df['Roll'].str.split(' = ').str[0]
+        roll_df['Roll'] = roll_df['Roll'].str.split(' = ').str[1]
+        roll_df = roll_df[['Session', 'Text', 'Text Type', 'Dice', 'Roll']]
+        roll_df.to_csv(f'{self.chat_folder}\\DiceRolls.csv', index=False)
+        temp = 'temp'
+
