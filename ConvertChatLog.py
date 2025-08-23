@@ -45,6 +45,7 @@ chat_obj.ooc_fonts = ['005500', '66CC66']
 #                         ['261A12', 'Player'],
 #                         ['FFE6AB', 'Character'],
 #                         ['66CC66', 'OoC']]
+chat_obj.special_sessions = {'2025-07-19':'Spooky Lighthouse'}
 chat_obj.read_file()
 chat_obj.set_sessions()
 chat_obj.split_chat_text()

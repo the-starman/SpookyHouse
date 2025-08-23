@@ -10,6 +10,7 @@ class ChatLog():
         self._chat_file = ''
         self.chat_log = ''
         self._sessions = []
+        self.special_sessions = {}
         self.remove_lines = ''
         self.player_names = []
         self.player_cleanup = []
@@ -37,7 +38,7 @@ class ChatLog():
         for lines in self.chat_log:
             if 'Session started' in lines:
                 current_session = lines.split('"')[1]
-            if current_session != '':
+            if current_session != '' and current_session not in self.special_sessions:
                 sessions_log.append([current_session, lines])
         self._sessions_df = pd.DataFrame(sessions_log)
         self._sessions_df.columns = ['Session', 'Chat Log']
@@ -348,5 +349,4 @@ class ChatLog():
         roll_df['Roll'] = roll_df['Roll'].str.split(' = ').str[1]
         roll_df = roll_df[['Session', 'Text', 'Text Type', 'Dice', 'Roll']]
         roll_df.to_csv(f'{self.chat_folder}\\DiceRolls.csv', index=False)
-        temp = 'temp'
 
