@@ -64,7 +64,6 @@ class ChatLog():
         self._sessions_df = self._sessions_df.merge(count_df, how='left', on='Session')
         self._sessions_df = self._sessions_df[self._sessions_df['counts'] > self.session_cuttoff]
         self._sessions = list(pd.unique(self._sessions_df['Session']))
-        self._sessions.sort(reverse=True)
 
     def remove_bad_lines(self):
         for lines in self.remove_lines:
@@ -250,6 +249,7 @@ class ChatLog():
         _temp = 'temp'
 
     def create_session_ledger(self):
+        self._sessions.sort()
         self.set_header_footer('Rooms/Assets/fgstyles.css')
         self._html_body = []
         self.add_header()
@@ -285,6 +285,7 @@ class ChatLog():
             self.write_html_file(f'Rooms/ChatLogs/{player.replace(' ', '')}_{session}.html', self._html_body)
 
     def create_player_session(self):
+        self._sessions.sort(reverse=True)
         for session in self._sessions:
             for player in self.player_names:
                 self.create_session(session=session, player=player)
