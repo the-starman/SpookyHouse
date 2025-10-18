@@ -195,6 +195,7 @@ class ChatLog():
             roll_df = roll_df[roll_df['Text Type'].str.contains(f'Roll:{player}')]
             filename = player.replace(' ', '')
         roll_df['Roll#'] = roll_df['Roll'].str.split(' = ').str[-1].astype(int)
+        roll_df = roll_df[roll_df['Roll#'] <= 100]
         roll_df['Roll##'] = (roll_df['Roll#']/5).round().astype(int)*5
         count_df = roll_df.groupby(['Roll##'])['Roll##'].size().reset_index(name='counts')
         count_df = count_df.sort_values(['Roll##'])
