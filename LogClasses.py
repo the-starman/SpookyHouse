@@ -146,7 +146,7 @@ class ChatLog():
             new_text = new_text.replace('[/D]', '</div></div>')
             return new_text
         if font_type == 'gmplayer':
-            image = '<p><img src="Rooms/Assets/Images/PlaceHolder.png"></p>'
+            image = '<p><img src=".../Assets/Images/PlaceHolder.png"></p>'
             strong = f'<p><strong>GM</strong></p>'
             new_text = new_text.replace(f'GM: ', '')
             new_text = new_text.replace('[D]', '<div class="row">')
@@ -258,6 +258,7 @@ class ChatLog():
             self._html_body.append(f'<h3>Session Date: {session}</h3>')
             sess_df = self._sessions_df[self._sessions_df['Session'] == session].copy()
             sess_df = sess_df[sess_df['Text Type'] == 'GM Text']
+            sess_df['New Text'] = sess_df.apply(lambda x: x['New Text'].replace('.../Assets/Images/PlaceHolder.png', 'Rooms/Assets/Images/PlaceHolder.png'), axis=1)
             sess_list = sess_df['New Text'].to_list()
             for text in sess_list:
                 self._html_body.append(text)
