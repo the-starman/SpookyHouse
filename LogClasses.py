@@ -146,7 +146,7 @@ class ChatLog():
             new_text = new_text.replace('[/D]', '</div></div>')
             return new_text
         if font_type == 'gmplayer':
-            image = '<p><img src=".../Assets/Images/PlaceHolder.png"></p>'
+            image = '<p><img src="../Assets/Images/PlaceHolder.png"></p>'
             strong = f'<p><strong>GM</strong></p>'
             new_text = new_text.replace(f'GM: ', '')
             new_text = new_text.replace('[D]', '<div class="row">')
