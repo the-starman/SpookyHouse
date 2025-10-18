@@ -286,7 +286,6 @@ class ChatLog():
             self.write_html_file(f'Rooms/ChatLogs/{player.replace(' ', '')}_{session}.html', self._html_body)
 
     def create_player_session(self):
-        self._sessions.sort(reverse=True)
         for session in self._sessions:
             for player in self.player_names:
                 self.create_session(session=session, player=player)
@@ -303,6 +302,7 @@ class ChatLog():
                 self._html_body.append(f'<h1>You Have Entered {player}\'s Room</h1>')
             self._html_body.append('<h3>Choose an adventure to read</h3>')
             self._html_body.append('<ul>')
+            self._sessions.sort(reverse=True)
             for session in self._sessions:
                 self._html_body.append(f'<li><a href="ChatLogs/{player.replace(' ', '')}_{session}.html">Adventures From: {session}</a></li>')
             self._html_body.append('</ul>')
